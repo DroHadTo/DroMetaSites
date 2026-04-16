@@ -188,41 +188,6 @@ function App() {
             </div>
           </SectionReveal>
 
-          <SectionReveal className="hero-visual" delay={0.12}>
-            <div className="visual-frame">
-              <div className="visual-topline">
-                <span>Launch Console</span>
-                <span>Realtime Signal</span>
-              </div>
-              <div className="visual-main">
-                <div className="visual-kicker">Signal strength</div>
-                <div className="visual-score">98</div>
-                <div className="visual-graph">
-                  <span />
-                  <span />
-                  <span />
-                  <span />
-                  <span />
-                </div>
-              </div>
-              <div className="visual-cards">
-                <div className="mini-card">
-                  <strong>0.8s</strong>
-                  <span>Targeted first load</span>
-                </div>
-                <div className="mini-card">
-                  <strong>2-Step</strong>
-                  <span>Digital empire system</span>
-                </div>
-              </div>
-              <div
-                className="floating-panel"
-              >
-                <span>Checkout Ready</span>
-                <strong>PayPal Connected</strong>
-              </div>
-            </div>
-          </SectionReveal>
         </section>
 
         <section className="stats-grid section section-tight">
