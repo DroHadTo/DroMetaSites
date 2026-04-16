@@ -48,7 +48,10 @@ async function paypalFetch(path, options = {}) {
   const tokenData = await tokenResponse.json();
 
   if (!tokenResponse.ok || !tokenData.access_token) {
-    throw new Error(tokenData.error_description || "Unable to authenticate with PayPal.");
+    const env = clean(process.env.PAYPAL_ENV) || "sandbox";
+    throw new Error(
+      `PayPal auth failed (env=${env}): ${tokenData.error_description || tokenData.error || "Unknown error"}`
+    );
   }
 
   const response = await fetch(`${getBaseUrl()}${path}`, {
