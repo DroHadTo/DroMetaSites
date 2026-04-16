@@ -171,8 +171,8 @@ function App() {
               text="We build websites that look elite and close faster."
             />
             <p className="hero-lead">
-              Inspired by the Kingsites tone, rebuilt for DroMetaSites with a sharper
-              order flow, stronger motion, and a working PayPal checkout.
+              Built for DroMetaSites with a sharper order flow, stronger motion,
+              and a working PayPal checkout.
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href="#order">
