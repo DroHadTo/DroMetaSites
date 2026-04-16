@@ -934,6 +934,18 @@ textarea:focus,
   color: var(--danger);
 }
 
+.stripe-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 1.2rem;
+}
+
+.stripe-pay-button {
+  width: 100%;
+  justify-content: center;
+}
+
 .success-pill {
   justify-content: flex-start;
   color: var(--success);

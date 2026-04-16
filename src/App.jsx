@@ -10,9 +10,9 @@ import {
   tickerItems,
 } from "./data/site.js";
 
-const PayPalCheckout = lazy(() =>
-  import("./components/PayPalCheckout.jsx").then((module) => ({
-    default: module.PayPalCheckout,
+const StripeCheckout = lazy(() =>
+  import("./components/StripeCheckout.jsx").then((module) => ({
+    default: module.StripeCheckout,
   })),
 );
 
@@ -48,8 +48,8 @@ function buildKickoffSummary(selectedPackage, form, payment) {
     "Extra Notes:",
     form.notes || "None provided",
     "",
-    `PayPal Order: ${payment.id}`,
-    `Capture Status: ${payment.status}`,
+    `Payment ID: ${payment.id}`,
+    `Payment Status: ${payment.status}`,
   ].join("\n");
 }
 
@@ -540,24 +540,29 @@ function App() {
                         Complete the payment below to reserve the slot. The project summary is
                         generated immediately after successful capture.
                       </p>
-                      <Suspense
-                        fallback={
-                          <div className="payment-warning">
-                            Loading secure checkout...
-                          </div>
-                        }
-                      >
-                        <PayPalCheckout
-                          selectedPackage={selectedPackage}
-                          customer={form}
-                          disabled={!isStepTwoValid}
-                          onSuccess={(result) => {
-                            setPaymentError("");
-                            setPaymentSuccess(result);
-                          }}
-                          onError={(message) => setPaymentError(message)}
-                        />
-                      </Suspense>
+                      {isStepTwoValid ? (
+                        <Suspense
+                          fallback={
+                            <div className="payment-warning">
+                              Loading secure checkout…
+                            </div>
+                          }
+                        >
+                          <StripeCheckout
+                            selectedPackage={selectedPackage}
+                            customer={form}
+                            onSuccess={(result) => {
+                              setPaymentError("");
+                              setPaymentSuccess(result);
+                            }}
+                            onError={(message) => setPaymentError(message)}
+                          />
+                        </Suspense>
+                      ) : (
+                        <div className="payment-warning">
+                          Complete all required fields above to unlock payment.
+                        </div>
+                      )}
                       <div className="checkout-actions">
                         <button
                           className="button button-secondary"
@@ -582,7 +587,7 @@ function App() {
                     text="Your project slot is reserved."
                   />
                   <p className="success-copy">
-                    The PayPal order was captured successfully. Use the kickoff summary below as the
+                    Payment was captured successfully. Use the kickoff summary below as the
                     project handoff document.
                   </p>
                   <pre className="summary-output">{kickoffSummary}</pre>
