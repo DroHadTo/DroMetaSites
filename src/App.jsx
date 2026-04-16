@@ -1,5 +1,4 @@
 import { lazy, Suspense, useState } from "react";
-import { motion } from "framer-motion";
 import { SectionReveal } from "./components/SectionReveal.jsx";
 import { SplitText } from "./components/SplitText.jsx";
 import {
@@ -216,14 +215,12 @@ function App() {
                   <span>Ordering workflow</span>
                 </div>
               </div>
-              <motion.div
+              <div
                 className="floating-panel"
-                animate={{ y: [0, -10, 0], rotate: [0, 1.5, 0] }}
-                transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
               >
                 <span>Checkout Ready</span>
                 <strong>PayPal Connected</strong>
-              </motion.div>
+              </div>
             </div>
           </SectionReveal>
         </section>
