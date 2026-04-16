@@ -61,6 +61,7 @@ function App() {
   const [paymentError, setPaymentError] = useState("");
   const [paymentSuccess, setPaymentSuccess] = useState(null);
   const [copyStatus, setCopyStatus] = useState("");
+  const [detailsConfirmed, setDetailsConfirmed] = useState(false);
 
   const selectedPackage =
     packageCatalog.find((item) => item.id === selectedPackageId) || null;
@@ -83,6 +84,7 @@ function App() {
     setSelectedPackageId(packageId);
     setPaymentError("");
     setPaymentSuccess(null);
+    setDetailsConfirmed(false);
     setStep(1);
     document.getElementById("order")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
@@ -101,6 +103,7 @@ function App() {
     }
 
     setPaymentError("");
+    setDetailsConfirmed(true);
   }
 
   async function handleCopySummary() {
@@ -519,7 +522,7 @@ function App() {
                         <button
                           className="button button-secondary"
                           type="button"
-                          onClick={() => setStep(1)}
+                          onClick={() => { setStep(1); setDetailsConfirmed(false); }}
                         >
                           Back
                         </button>
@@ -529,6 +532,7 @@ function App() {
                       </div>
                     </form>
 
+                    {detailsConfirmed && (
                     <div className="payment-stage field-wide">
                       <div className="payment-overview">
                         <div>
@@ -570,12 +574,13 @@ function App() {
                         <button
                           className="button button-secondary"
                           type="button"
-                          onClick={() => setStep(1)}
+                          onClick={() => { setStep(1); setDetailsConfirmed(false); }}
                         >
                           Back
                         </button>
                       </div>
                     </div>
+                    )}
                     </>
                   ) : null}
 
