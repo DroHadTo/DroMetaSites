@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -114,9 +114,24 @@ export function StripeCheckout({ selectedPackage, customer, onSuccess, onError }
   if (!clientSecret) return null;
 
   return (
+    <ElementsWithSecret
+      clientSecret={clientSecret}
+      onSuccess={onSuccess}
+      onError={onError}
+    />
+  );
+}
+
+function ElementsWithSecret({ clientSecret, onSuccess, onError }) {
+  const options = useMemo(
+    () => ({ clientSecret, appearance: stripeAppearance }),
+    [clientSecret],
+  );
+
+  return (
     <Elements
       stripe={stripePromise}
-      options={{ clientSecret, appearance: stripeAppearance }}
+      options={options}
     >
       <PayForm onSuccess={onSuccess} onError={onError} />
     </Elements>

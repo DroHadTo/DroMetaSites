@@ -427,6 +427,7 @@ function App() {
                   ) : null}
 
                   {step === 2 ? (
+                    <>
                     <form className="detail-form" onSubmit={handleDetailsSubmit}>
                       <label>
                         <span>Full name</span>
@@ -526,7 +527,9 @@ function App() {
                           Confirm Details
                         </button>
                       </div>
-                      <div className="payment-stage field-wide">
+                    </form>
+
+                    <div className="payment-stage field-wide">
                       <div className="payment-overview">
                         <div>
                           <span className="panel-label">Package</span>
@@ -572,8 +575,8 @@ function App() {
                           Back
                         </button>
                       </div>
-                      </div>
-                    </form>
+                    </div>
+                    </>
                   ) : null}
 
                   {paymentError ? <p className="form-error">{paymentError}</p> : null}
