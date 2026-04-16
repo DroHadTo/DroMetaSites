@@ -3,7 +3,6 @@ import { SectionReveal } from "./components/SectionReveal.jsx";
 import { SplitText } from "./components/SplitText.jsx";
 import {
   packageCatalog,
-  processSteps,
   proof,
   services,
   stats,
@@ -22,7 +21,7 @@ const initialForm = {
   email: "",
   brand: "",
   website: "",
-  timeline: "1 to 2 weeks",
+  timeline: "",
   goals: "",
   pages: "",
   notes: "",
@@ -57,23 +56,26 @@ function buildKickoffSummary(selectedPackage, form, payment) {
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [step, setStep] = useState(1);
-  const [selectedPackageId, setSelectedPackageId] = useState(packageCatalog[1].id);
+  const [selectedPackageId, setSelectedPackageId] = useState("");
   const [form, setForm] = useState(initialForm);
   const [paymentError, setPaymentError] = useState("");
   const [paymentSuccess, setPaymentSuccess] = useState(null);
   const [copyStatus, setCopyStatus] = useState("");
 
   const selectedPackage =
-    packageCatalog.find((item) => item.id === selectedPackageId) || packageCatalog[1];
+    packageCatalog.find((item) => item.id === selectedPackageId) || null;
+
+  const isStepOneValid = Boolean(selectedPackageId && form.timeline.trim());
 
   const isStepTwoValid =
+    Boolean(selectedPackageId) &&
     form.name.trim() &&
     form.email.trim() &&
     form.brand.trim() &&
     form.goals.trim() &&
     form.pages.trim();
 
-  const kickoffSummary = paymentSuccess
+  const kickoffSummary = paymentSuccess && selectedPackage
     ? buildKickoffSummary(selectedPackage, form, paymentSuccess)
     : "";
 
@@ -81,7 +83,7 @@ function App() {
     setSelectedPackageId(packageId);
     setPaymentError("");
     setPaymentSuccess(null);
-    setStep(2);
+    setStep(1);
     document.getElementById("order")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -99,7 +101,6 @@ function App() {
     }
 
     setPaymentError("");
-    setStep(3);
   }
 
   async function handleCopySummary() {
@@ -117,9 +118,8 @@ function App() {
 
   const navItems = [
     { href: "#services", label: "Services" },
-    { href: "#packages", label: "Packages" },
-    { href: "#proof", label: "Why It Converts" },
-    { href: "#order", label: "Order" },
+    { href: "#intel", label: "Intel" },
+    { href: "#order", label: "Get Started" },
   ];
 
   return (
@@ -155,7 +155,7 @@ function App() {
             </a>
           ))}
           <a className="button button-primary button-nav" href="#order">
-            Start Order
+            Launch Project
           </a>
         </nav>
       </header>
@@ -163,28 +163,28 @@ function App() {
       <main id="top">
         <section className="hero section">
           <SectionReveal className="hero-copy">
-            <div className="eyebrow">Future-built websites</div>
+            <div className="eyebrow">Now accepting new builds</div>
             <SplitText
               as="h1"
               className="hero-title"
-              text="We build websites that look elite and close faster."
+              text="We Don't Build Websites. We Engineer Digital Empires"
             />
             <p className="hero-lead">
-              Built for DroMetaSites with a sharper order flow, stronger motion,
-              and a working PayPal checkout.
+              Your brand deserves more than a template. We architect high-performance,
+              conversion-optimized web experiences that make your competition irrelevant.
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href="#order">
-                Lock In A Build
+                Start Your Build
               </a>
-              <a className="button button-secondary" href="#packages">
-                View Packages
+              <a className="button button-secondary" href="#services">
+                See What We Do
               </a>
             </div>
             <div className="hero-chips">
-              <span>Custom React build</span>
-              <span>Motion-driven UI</span>
-              <span>PayPal checkout live</span>
+              <span>Launch Project</span>
+              <span>Now accepting new builds</span>
+              <span>Scroll</span>
             </div>
           </SectionReveal>
 
@@ -211,8 +211,8 @@ function App() {
                   <span>Targeted first load</span>
                 </div>
                 <div className="mini-card">
-                  <strong>3-Step</strong>
-                  <span>Ordering workflow</span>
+                  <strong>2-Step</strong>
+                  <span>Digital empire system</span>
                 </div>
               </div>
               <div
@@ -244,22 +244,21 @@ function App() {
 
         <section className="section" id="services">
           <SectionReveal className="section-heading">
-            <div className="eyebrow">Services</div>
+            <div className="eyebrow">// What We Deploy</div>
             <SplitText
               as="h2"
               className="section-title"
-              text="A premium frontend is useless if it does not move the buyer."
+              text="Full-Stack Web Solutions"
             />
             <p>
-              The design direction is aggressive on purpose, but the conversion path stays
-              disciplined. Better visuals, stronger messaging, and a clear route into checkout.
+              Every pixel engineered. Every interaction optimized. Every result measured.
             </p>
           </SectionReveal>
 
           <div className="service-grid">
             {services.map((service, index) => (
               <SectionReveal className="glass-card service-card" delay={index * 0.06} key={service.title}>
-                <div className="service-index">0{index + 1}</div>
+                <div className="service-index">{service.icon}</div>
                 <h3>{service.title}</h3>
                 <p>{service.text}</p>
               </SectionReveal>
@@ -267,15 +266,19 @@ function App() {
           </div>
         </section>
 
-        <section className="section" id="proof">
+        <section className="section" id="intel">
           <div className="proof-layout">
             <SectionReveal className="section-heading">
-              <div className="eyebrow">Why It Converts</div>
+              <div className="eyebrow">Intel</div>
               <SplitText
                 as="h2"
                 className="section-title"
-                text="The page feels cinematic, but the UX stays clean under pressure."
+                text="Strategic Systems For Brands That Need More Than A Template"
               />
+              <p>
+                Positioning, speed, conversion architecture, and launch clarity are built into
+                the structure from the start.
+              </p>
             </SectionReveal>
 
             <div className="proof-grid">
@@ -291,11 +294,11 @@ function App() {
 
         <section className="section" id="packages">
           <SectionReveal className="section-heading">
-            <div className="eyebrow">Packages</div>
+            <div className="eyebrow">Launch Project</div>
             <SplitText
               as="h2"
               className="section-title"
-              text="Choose the build path, then move straight into checkout."
+              text="Choose The Right Build Path Before You Initialize Checkout"
             />
           </SectionReveal>
 
@@ -321,7 +324,7 @@ function App() {
                   type="button"
                   onClick={() => selectPackage(item.id)}
                 >
-                  Select Package
+                  Launch Project
                 </button>
               </SectionReveal>
             ))}
@@ -351,38 +354,20 @@ function App() {
           </div>
         </section>
 
-        <section className="section">
-          <SectionReveal className="section-heading">
-            <div className="eyebrow">Process</div>
-            <SplitText
-              as="h2"
-              className="section-title"
-              text="Three steps from interest to a paid project slot."
-            />
-          </SectionReveal>
-
-          <div className="process-grid">
-            {processSteps.map((item, index) => (
-              <SectionReveal className="glass-card process-card" delay={index * 0.06} key={item.number}>
-                <span className="process-number">{item.number}</span>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
-              </SectionReveal>
-            ))}
-          </div>
-        </section>
-
         <section className="section order-section" id="order">
           <div className="order-layout">
             <SectionReveal className="order-sidebar">
-              <div className="eyebrow">Order Flow</div>
+              <div className="eyebrow">// Secure Your Spot</div>
               <SplitText
                 as="h2"
                 className="section-title"
-                text="Reserve the project slot and collect the build brief in one flow."
+                text="Initialize Build Sequence"
               />
+              <p className="hero-lead">
+                Select your package and secure your spot to begin the process.
+              </p>
               <div className="step-list">
-                {[1, 2, 3].map((currentStep) => (
+                {[1, 2].map((currentStep) => (
                   <div
                     className={`step-item ${step === currentStep ? "is-active" : ""} ${
                       step > currentStep ? "is-complete" : ""
@@ -392,14 +377,12 @@ function App() {
                     <span>{currentStep}</span>
                     <div>
                       <strong>
-                        {currentStep === 1 && "Package"}
-                        {currentStep === 2 && "Project Details"}
-                        {currentStep === 3 && "Payment"}
+                        {currentStep === 1 && "Package Selection"}
+                        {currentStep === 2 && "Project Payment"}
                       </strong>
                       <p>
-                        {currentStep === 1 && "Choose the build level."}
-                        {currentStep === 2 && "Add client and project info."}
-                        {currentStep === 3 && "Complete PayPal checkout."}
+                        {currentStep === 1 && "Select your package and expected timeline."}
+                        {currentStep === 2 && "Add project details and complete checkout."}
                       </p>
                     </div>
                   </div>
@@ -407,9 +390,13 @@ function App() {
               </div>
               <div className="glass-card order-summary">
                 <div className="panel-label">Selected Package</div>
-                <strong>{selectedPackage.name}</strong>
-                <span>${selectedPackage.price}</span>
-                <p>{selectedPackage.blurb}</p>
+                <strong>{selectedPackage ? selectedPackage.name : "Select your package..."}</strong>
+                <span>${selectedPackage ? selectedPackage.price.toFixed(2) : "0.00"}</span>
+                <p>
+                  {selectedPackage
+                    ? selectedPackage.blurb
+                    : "Expected timeline and package choice are locked in before payment."}
+                </p>
               </div>
             </SectionReveal>
 
@@ -417,32 +404,59 @@ function App() {
               {!paymentSuccess ? (
                 <div className="glass-card checkout-card">
                   <div className="checkout-topline">
-                    <span>Step {step} of 3</span>
-                    <span>Secure ordering</span>
+                    <span>Project Payment</span>
+                    <span>Step {step} of 2</span>
                   </div>
 
                   {step === 1 ? (
                     <div className="selection-stack">
-                      {packageCatalog.map((item) => (
-                        <button
-                          className={`selection-card ${selectedPackage.id === item.id ? "is-selected" : ""}`}
-                          key={item.id}
-                          type="button"
-                          onClick={() => setSelectedPackageId(item.id)}
+                      <div className="payment-overview">
+                        <div>
+                          <span className="panel-label">Project Payment</span>
+                          <strong>Step 1 of 2</strong>
+                        </div>
+                        <div className="payment-price">
+                          ${selectedPackage ? selectedPackage.price.toFixed(2) : "0.00"}
+                        </div>
+                      </div>
+                      <label>
+                        <span>Package Selection</span>
+                        <select
+                          name="packageSelection"
+                          value={selectedPackageId}
+                          onChange={(event) => setSelectedPackageId(event.target.value)}
                         >
-                          <div>
-                            <strong>{item.name}</strong>
-                            <span>{item.turnaround}</span>
-                          </div>
-                          <div className="selection-price">${item.price}</div>
-                        </button>
-                      ))}
+                          <option value="">Select your package...</option>
+                          {packageCatalog.map((item) => (
+                            <option key={item.id} value={item.id}>
+                              {item.name} - ${item.price.toFixed(2)}
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+                      <label>
+                        <span>Expected Timeline</span>
+                        <select name="timeline" value={form.timeline} onChange={handleInputChange}>
+                          <option value="">When do you need this launched?</option>
+                          <option>ASAP</option>
+                          <option>1 to 2 weeks</option>
+                          <option>2 to 4 weeks</option>
+                          <option>1 to 2 months</option>
+                        </select>
+                      </label>
                       <button
                         className="button button-primary"
                         type="button"
-                        onClick={() => setStep(2)}
+                        onClick={() => {
+                          if (!isStepOneValid) {
+                            setPaymentError("Select your package and expected timeline first.");
+                            return;
+                          }
+                          setPaymentError("");
+                          setStep(2);
+                        }}
                       >
-                        Continue To Details
+                        NEXT STEP →
                       </button>
                     </div>
                   ) : null}
@@ -495,6 +509,7 @@ function App() {
                       <label>
                         <span>Timeline</span>
                         <select name="timeline" value={form.timeline} onChange={handleInputChange}>
+                          <option value="">When do you need this launched?</option>
                           <option>ASAP</option>
                           <option>1 to 2 weeks</option>
                           <option>2 to 4 weeks</option>
@@ -543,20 +558,18 @@ function App() {
                           Back
                         </button>
                         <button className="button button-primary" type="submit">
-                          Continue To Payment
+                          Confirm Details
                         </button>
                       </div>
-                    </form>
-                  ) : null}
-
-                  {step === 3 ? (
-                    <div className="payment-stage">
+                      <div className="payment-stage field-wide">
                       <div className="payment-overview">
                         <div>
                           <span className="panel-label">Package</span>
-                          <strong>{selectedPackage.name}</strong>
+                          <strong>{selectedPackage ? selectedPackage.name : "No package selected"}</strong>
                         </div>
-                        <div className="payment-price">${selectedPackage.price}</div>
+                        <div className="payment-price">
+                          ${selectedPackage ? selectedPackage.price.toFixed(2) : "0.00"}
+                        </div>
                       </div>
                       <p className="payment-note">
                         Complete the payment below to reserve the slot. The project summary is
@@ -584,12 +597,13 @@ function App() {
                         <button
                           className="button button-secondary"
                           type="button"
-                          onClick={() => setStep(2)}
+                          onClick={() => setStep(1)}
                         >
                           Back
                         </button>
                       </div>
-                    </div>
+                      </div>
+                    </form>
                   ) : null}
 
                   {paymentError ? <p className="form-error">{paymentError}</p> : null}

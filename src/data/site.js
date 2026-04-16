@@ -1,7 +1,7 @@
 export const packageCatalog = [
   {
     id: "launch",
-    label: "Launch Sprint",
+    label: "Launch Project",
     name: "Starter Landing System",
     price: 250,
     turnaround: "5 to 7 days",
@@ -56,35 +56,49 @@ export const stats = [
 
 export const services = [
   {
-    title: "Offer Positioning",
-    text: "Messaging, hierarchy, and layout tuned so visitors understand why you matter within seconds.",
+    icon: "⌨",
+    title: "Custom Web Design",
+    text: "Bespoke designs built from the ground up — no cookie-cutter templates. Your brand, amplified to its full potential.",
   },
   {
-    title: "Premium UI Systems",
-    text: "Distinct visual systems with motion, contrast, and structure that feel expensive instead of generic.",
+    icon: "⚙",
+    title: "High-Speed Development",
+    text: "Lightning-fast, responsive builds optimized for performance. Sub-second load times that keep visitors locked in.",
   },
   {
-    title: "Conversion Architecture",
-    text: "Pages designed around actions, not decoration: clicks, calls, bookings, and closed deals.",
+    icon: "⚡",
+    title: "SEO & Visibility",
+    text: "Built-in search engine architecture so your site gets found. Structured data, speed optimization, and keyword strategy from day one.",
   },
   {
-    title: "Launch Engineering",
-    text: "Fast frontend delivery, clean deployment, and practical handoff so the site stays operational.",
+    icon: "⚖",
+    title: "Brand Identity",
+    text: "Logo, color systems, typography, and visual language — we craft the complete identity that makes your brand unforgettable.",
+  },
+  {
+    icon: "★",
+    title: "Conversion Optimization",
+    text: "Strategic layouts and CTAs designed to turn visitors into customers. Every element earns its place on the page.",
+  },
+  {
+    icon: "♾",
+    title: "Ongoing Support",
+    text: "Post-launch maintenance, updates, and scaling. We don't disappear after delivery — we grow with you.",
   },
 ];
 
 export const proof = [
   {
-    title: "Built to look ahead",
-    text: "The visual direction leans cinematic and futuristic, but the layout still reads clearly on first contact.",
+    title: "Launch-Ready Positioning",
+    text: "The message lands fast, the hierarchy is disciplined, and the visual system makes the offer feel immediately more expensive.",
   },
   {
-    title: "Tighter decision paths",
-    text: "Every section narrows the next move so the visitor does not get lost between inspiration and action.",
+    title: "Operational Clarity",
+    text: "Package selection, timeline expectations, and project intake are presented cleanly so the buyer knows exactly what happens next.",
   },
   {
-    title: "Operational by default",
-    text: "Checkout, package selection, and project intake are connected into one cleaner flow.",
+    title: "Built To Outperform",
+    text: "The frontend stays fast, responsive, and conversion-aware so the site supports the business instead of just decorating it.",
   },
 ];
 
@@ -112,26 +126,21 @@ export const testimonials = [
 export const processSteps = [
   {
     number: "01",
-    title: "Select the build path",
-    text: "Choose the package that matches the scale of your current offer and timeline.",
+    title: "Select Your Package",
+    text: "Choose the build path and timeline that match the urgency and scale of the project.",
   },
   {
     number: "02",
-    title: "Lock the project in",
-    text: "Add your brief details and complete checkout through PayPal to reserve the slot.",
-  },
-  {
-    number: "03",
-    title: "Submit the kickoff intel",
-    text: "After payment, hand over the project vision so the design and build can start with clarity.",
+    title: "Complete Payment",
+    text: "Add your project details and secure the build slot through PayPal to begin the process.",
   },
 ];
 
 export const tickerItems = [
   "Future-built websites",
-  "Conversion architecture",
-  "Premium motion systems",
-  "Checkout-ready ordering",
-  "Fast launch delivery",
-  "Custom frontends only",
+  "Digital empires",
+  "High-performance builds",
+  "Conversion optimization",
+  "Secure project payment",
+  "Now accepting new builds",
 ];
