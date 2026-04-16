@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import { SectionReveal } from "./components/SectionReveal.jsx";
 import { SplitText } from "./components/SplitText.jsx";
 import {

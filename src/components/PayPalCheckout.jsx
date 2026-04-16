@@ -1,3 +1,4 @@
+import React from "react";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 function buildOrderPayload(selectedPackage, customer) {

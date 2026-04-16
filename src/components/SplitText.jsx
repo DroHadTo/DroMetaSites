@@ -1,3 +1,5 @@
+import React from "react";
+
 export function SplitText({
   text,
   as: Tag = "h2",

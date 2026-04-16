@@ -1,3 +1,5 @@
+import React from "react";
+
 export function SectionReveal({ children, className = "", delay = 0 }) {
   return (
     <div
