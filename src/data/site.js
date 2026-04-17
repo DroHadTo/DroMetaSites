@@ -132,7 +132,7 @@ export const processSteps = [
   {
     number: "02",
     title: "Complete Payment",
-    text: "Add your project details and secure the build slot through PayPal to begin the process.",
+    text: "Add your project details and secure the build slot through our checkout to begin the process.",
   },
 ];
 

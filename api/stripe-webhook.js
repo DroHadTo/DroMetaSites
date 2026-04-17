@@ -1,47 +1,25 @@
 import Stripe from "stripe";
+import { createClient } from "@supabase/supabase-js";
+
+export const config = { api: { bodyParser: false } };
 
 function clean(value) {
-  return String(value || "").trim();
+  return String(value ?? "").trim();
 }
 
 async function getRawBody(req) {
-  if (req.body && typeof req.body !== "string") {
-    throw new Error("Body already parsed — disable body parsing for this route.");
-  }
-
-  if (typeof req.body === "string") {
-    return Buffer.from(req.body, "utf8");
+  if (Buffer.isBuffer(req.body)) return req.body;
+  if (typeof req.body === "string") return Buffer.from(req.body, "utf8");
+  if (req.body && typeof req.body === "object" && !Array.isArray(req.body)) {
+    return Buffer.from(JSON.stringify(req.body));
   }
 
   const chunks = [];
-
   for await (const chunk of req) {
-    chunks.push(chunk);
+    chunks.push(typeof chunk === "string" ? Buffer.from(chunk) : chunk);
   }
-
   return Buffer.concat(chunks);
 }
-
-async function notifyAdmin(payload) {
-  const adminUrl = clean(process.env.ADMIN_WEBHOOK_URL);
-
-  if (!adminUrl) return;
-
-  try {
-    await fetch(adminUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-webhook-secret": clean(process.env.ADMIN_WEBHOOK_SECRET),
-      },
-      body: JSON.stringify(payload),
-    });
-  } catch {
-    // Non-fatal — Stripe already has the event
-  }
-}
-
-export const config = { api: { bodyParser: false } };
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -50,27 +28,28 @@ export default async function handler(req, res) {
 
   const secretKey = clean(process.env.STRIPE_SECRET_KEY);
   const webhookSecret = clean(process.env.STRIPE_WEBHOOK_SECRET);
+  const supabaseUrl = clean(process.env.SUPABASE_URL);
+  const supabaseServiceKey = clean(process.env.SUPABASE_SERVICE_ROLE_KEY);
 
-  if (!secretKey || !webhookSecret) {
-    return res.status(500).json({ error: "Stripe webhook is not configured." });
+  if (!secretKey || !webhookSecret || !supabaseUrl || !supabaseServiceKey) {
+    console.error("Missing env vars: STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY");
+    return res.status(500).json({ error: "Webhook is not configured." });
   }
 
   let rawBody;
-
   try {
     rawBody = await getRawBody(req);
-  } catch (err) {
+  } catch {
     return res.status(400).json({ error: "Could not read request body." });
   }
 
   const signature = req.headers["stripe-signature"];
-
   let event;
-
   try {
-    const stripe = new Stripe(secretKey);
+    const stripe = new Stripe(secretKey, { apiVersion: "2024-04-10" });
     event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
   } catch (err) {
+    console.error("Webhook signature failure:", err.message);
     return res.status(400).json({ error: `Webhook signature invalid: ${err.message}` });
   }
 
@@ -78,20 +57,26 @@ export default async function handler(req, res) {
     const intent = event.data.object;
     const meta = intent.metadata || {};
 
-    const order = {
-      event: "order.paid",
-      paymentIntentId: intent.id,
-      amount: intent.amount / 100,
-      currency: intent.currency.toUpperCase(),
-      packageId: meta.packageId || "",
-      packageName: meta.packageName || "",
-      customerName: meta.customerName || "",
-      customerEmail: meta.customerEmail || intent.receipt_email || "",
-      brand: meta.brand || "",
-      paidAt: new Date(intent.created * 1000).toISOString(),
-    };
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    await notifyAdmin(order);
+    const { error } = await supabase.from("sales").insert({
+      customer_name: clean(meta.customerName),
+      customer_email: clean(meta.customerEmail) || clean(intent.receipt_email),
+      brand: "drometasites",
+      package_name: clean(meta.packageName),
+      package_id: clean(meta.packageId),
+      amount: intent.amount,
+      currency: intent.currency,
+      payment_intent_id: intent.id,
+      status: "new",
+      paid_at: new Date(intent.created * 1000).toISOString(),
+    });
+
+    if (error) {
+      console.error("Supabase insert failed:", error.message);
+    } else {
+      console.log("Sale recorded:", intent.id);
+    }
   }
 
   return res.status(200).json({ received: true });
