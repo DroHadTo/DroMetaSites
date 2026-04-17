@@ -1,5 +1,20 @@
 export const packageCatalog = [
   {
+    id: "consultation",
+    label: "Free Consultation",
+    name: "Strategy Consultation",
+    price: 0.5,
+    turnaround: "48 hours",
+    blurb:
+      "A focused session to map out your project scope, goals, and the right build path for your business.",
+    features: [
+      "Project scope review",
+      "Package recommendation",
+      "Timeline planning",
+      "No commitment required",
+    ],
+  },
+  {
     id: "launch",
     label: "Launch Project",
     name: "Starter Landing System",
