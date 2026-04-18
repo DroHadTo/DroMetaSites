@@ -34,21 +34,25 @@ function PayForm({ onSuccess, onError }) {
     setLoading(true);
     onError("");
 
-    const { error, paymentIntent } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: window.location.href,
-      },
-      redirect: "if_required",
-    });
+    try {
+      const { error, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: window.location.href,
+        },
+        redirect: "if_required",
+      });
 
-    if (error) {
-      onError(error.message || "Payment failed. Please try again.");
-      setLoading(false);
-    } else if (paymentIntent && paymentIntent.status === "succeeded") {
-      onSuccess({ id: paymentIntent.id, status: paymentIntent.status });
-    } else {
-      onError("Unexpected payment state. Please contact support.");
+      if (error) {
+        onError(error.message || "Payment failed. Please try again.");
+      } else if (paymentIntent && paymentIntent.status === "succeeded") {
+        onSuccess({ id: paymentIntent.id, status: paymentIntent.status });
+      } else {
+        onError("Unexpected payment state. Please contact support.");
+      }
+    } catch (err) {
+      onError(err.message || "Payment failed. Please try again.");
+    } finally {
       setLoading(false);
     }
   }
