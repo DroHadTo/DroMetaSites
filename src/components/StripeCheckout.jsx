@@ -7,7 +7,14 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+const publishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+const stripePromise = publishableKey ? loadStripe(publishableKey) : null;
+
+if (!publishableKey) {
+  console.error(
+    "VITE_STRIPE_PUBLISHABLE_KEY is missing. The payment form cannot load. Set it in Vercel and redeploy.",
+  );
+}
 
 const stripeAppearance = {
   theme: "night",
@@ -25,6 +32,7 @@ function PayForm({ onSuccess, onError }) {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
+  const [elementReady, setElementReady] = useState(false);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -35,6 +43,13 @@ function PayForm({ onSuccess, onError }) {
     onError("");
 
     try {
+      const { error: submitError } = await elements.submit();
+      if (submitError) {
+        onError(submitError.message || "Please check your card details.");
+        setLoading(false);
+        return;
+      }
+
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
@@ -59,11 +74,16 @@ function PayForm({ onSuccess, onError }) {
 
   return (
     <form onSubmit={handleSubmit} className="stripe-form">
-      <PaymentElement />
+      <div className="stripe-element-wrap" style={{ minHeight: "200px" }}>
+        <PaymentElement onReady={() => setElementReady(true)} />
+        {!elementReady && (
+          <div className="payment-warning">Loading secure card form…</div>
+        )}
+      </div>
       <button
         className="button button-primary stripe-pay-button"
         type="submit"
-        disabled={!stripe || !elements || loading}
+        disabled={!stripe || !elements || !elementReady || loading}
       >
         {loading ? "Processing…" : "Complete Payment"}
       </button>
@@ -79,6 +99,15 @@ export function StripeCheckout({ selectedPackage, customer, onSuccess, onError }
   useEffect(() => {
     if (!selectedPackage) return;
 
+    if (!publishableKey) {
+      const message =
+        "Stripe publishable key is missing. Set VITE_STRIPE_PUBLISHABLE_KEY in Vercel and redeploy.";
+      setInitError(message);
+      setLoading(false);
+      onError(message);
+      return;
+    }
+
     setLoading(true);
     setInitError("");
 
@@ -93,6 +122,7 @@ export function StripeCheckout({ selectedPackage, customer, onSuccess, onError }
       .then((res) => res.json().then((data) => ({ ok: res.ok, data })))
       .then(({ ok, data }) => {
         if (!ok) throw new Error(data.error || "Failed to initialize checkout.");
+        if (!data.clientSecret) throw new Error("No client secret returned.");
         setClientSecret(data.clientSecret);
       })
       .catch((err) => {
