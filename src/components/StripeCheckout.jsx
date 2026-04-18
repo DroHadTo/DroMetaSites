@@ -164,6 +164,7 @@ function ElementsWithSecret({ clientSecret, onSuccess, onError }) {
 
   return (
     <Elements
+      key={clientSecret}
       stripe={stripePromise}
       options={options}
     >
