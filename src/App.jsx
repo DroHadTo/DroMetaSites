@@ -94,7 +94,7 @@ function App() {
     setForm((current) => ({ ...current, [name]: value }));
   }
 
-  function handleDetailsSubmit(event) {
+  async function handleDetailsSubmit(event) {
     event.preventDefault();
 
     if (!isStepTwoValid) {
@@ -104,6 +104,23 @@ function App() {
 
     setPaymentError("");
     setDetailsConfirmed(true);
+
+    fetch("/api/submit-lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name:        form.name,
+        email:       form.email,
+        brand:       form.brand,
+        website:     form.website,
+        timeline:    form.timeline,
+        goals:       form.goals,
+        pages:       form.pages,
+        notes:       form.notes,
+        packageId:   selectedPackage?.id   ?? "",
+        packageName: selectedPackage?.name ?? "",
+      }),
+    }).catch(() => {});
   }
 
   async function handleCopySummary() {
