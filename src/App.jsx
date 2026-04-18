@@ -183,28 +183,28 @@ function App() {
       <main id="top">
         <section className="hero section">
           <SectionReveal className="hero-copy">
-            <div className="eyebrow">Now accepting new builds</div>
+            <div className="eyebrow">Limited build slots available</div>
             <SplitText
               as="h1"
               className="hero-title"
-              text="We Don't Build Websites. We Engineer Digital Empires"
+              text="Stop Losing Clients To A Website That Looks Like Everyone Else's"
             />
             <p className="hero-lead">
-              Your brand deserves more than a template. We architect high-performance,
-              conversion-optimized web experiences that make your competition irrelevant.
+              Your brand deserves more than a template. We design and build high-performance,
+              conversion-optimised websites that make your competition irrelevant.
             </p>
             <div className="hero-actions">
               <a className="button button-primary" href="#order">
-                Start Your Build
+                Claim Your Build Slot
               </a>
               <a className="button button-secondary" href="#services">
-                See What We Do
+                See What We Build
               </a>
             </div>
             <div className="hero-chips">
-              <span>Launch Project</span>
-              <span>Now accepting new builds</span>
-              <span>Scroll</span>
+              <span>Custom-built websites</span>
+              <span>Limited slots open</span>
+              <span>Results guaranteed</span>
             </div>
           </SectionReveal>
 
@@ -229,14 +229,14 @@ function App() {
 
         <section className="section" id="services">
           <SectionReveal className="section-heading">
-            <div className="eyebrow">// What We Deploy</div>
+            <div className="eyebrow">What We Build</div>
             <SplitText
               as="h2"
               className="section-title"
-              text="Full-Stack Web Solutions"
+              text="Everything Your Online Presence Needs To Compete"
             />
             <p>
-              Every pixel engineered. Every interaction optimized. Every result measured.
+              From design and development to brand identity and ongoing support — we handle the full picture so you don't have to piece it together yourself.
             </p>
           </SectionReveal>
 
@@ -254,15 +254,14 @@ function App() {
         <section className="section" id="intel">
           <div className="proof-layout">
             <SectionReveal className="section-heading">
-              <div className="eyebrow">Intel</div>
+              <div className="eyebrow">Why Clients Choose Us</div>
               <SplitText
                 as="h2"
                 className="section-title"
-                text="Strategic Systems For Brands That Need More Than A Template"
+                text="We Build Sites That Work As Hard As You Do"
               />
               <p>
-                Positioning, speed, conversion architecture, and launch clarity are built into
-                the structure from the start.
+                Positioning, speed, and conversion architecture are built into the structure from day one — not added as an afterthought.
               </p>
             </SectionReveal>
 
@@ -279,12 +278,13 @@ function App() {
 
         <section className="section" id="packages">
           <SectionReveal className="section-heading">
-            <div className="eyebrow">Launch Project</div>
+            <div className="eyebrow">Pricing & Packages</div>
             <SplitText
               as="h2"
               className="section-title"
-              text="Choose The Right Build Path Before You Initialize Checkout"
+              text="Transparent Pricing. No Surprises. Just Results."
             />
+            <p>Choose the build path that matches your goals and timeline. Every package is scoped, priced, and delivered to spec.</p>
           </SectionReveal>
 
           <div className="package-grid">
@@ -318,11 +318,11 @@ function App() {
 
         <section className="section testimonials-section">
           <SectionReveal className="section-heading">
-            <div className="eyebrow">Client Intel</div>
+            <div className="eyebrow">Client Results</div>
             <SplitText
               as="h2"
               className="section-title"
-              text="Sharper visuals help, but clarity is what makes people buy."
+              text="Real Businesses. Real Results. Real Words."
             />
           </SectionReveal>
 
@@ -342,14 +342,14 @@ function App() {
         <section className="section order-section" id="order">
           <div className="order-layout">
             <SectionReveal className="order-sidebar">
-              <div className="eyebrow">// Secure Your Spot</div>
+              <div className="eyebrow">Ready To Get Started?</div>
               <SplitText
                 as="h2"
                 className="section-title"
-                text="Initialize Build Sequence"
+                text="Secure Your Build Slot Today"
               />
               <p className="hero-lead">
-                Select your package and secure your spot to begin the process.
+                Build slots are limited. Select your package, add your project details, and we'll be in touch within 48 hours to kick things off.
               </p>
               <div className="step-list">
                 {[1, 2].map((currentStep) => (
@@ -649,7 +649,7 @@ function App() {
             <span>DROMETA</span>
             <span className="brand-accent">SITES</span>
           </a>
-          <p>Premium websites, cleaner sales flows, and a front door that feels built for scale.</p>
+          <p>Premium websites built for businesses that are serious about growth. No templates. No shortcuts. Just results.</p>
         </div>
         <div className="footer-meta">
           <span>Johannesburg / Remote</span>
