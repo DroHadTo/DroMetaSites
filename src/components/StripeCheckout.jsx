@@ -33,6 +33,15 @@ function PayForm({ onSuccess, onError }) {
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const [elementReady, setElementReady] = useState(false);
+  const [loadFailed, setLoadFailed] = useState(false);
+
+  useEffect(() => {
+    if (elementReady) return;
+    const timer = setTimeout(() => {
+      if (!elementReady) setLoadFailed(true);
+    }, 8000);
+    return () => clearTimeout(timer);
+  }, [elementReady]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -76,8 +85,30 @@ function PayForm({ onSuccess, onError }) {
     <form onSubmit={handleSubmit} className="stripe-form">
       <div className="stripe-element-wrap" style={{ minHeight: "200px" }}>
         <PaymentElement onReady={() => setElementReady(true)} />
-        {!elementReady && (
+        {!elementReady && !loadFailed && (
           <div className="payment-warning">Loading secure card form…</div>
+        )}
+        {!elementReady && loadFailed && (
+          <div className="payment-warning" style={{ lineHeight: 1.5 }}>
+            <strong>Card form blocked by your browser.</strong>
+            <br />
+            Your browser or a privacy extension is blocking Stripe's scripts.
+            To continue:
+            <ul style={{ margin: "0.75rem 0 0 1.25rem", padding: 0 }}>
+              <li>
+                <strong>Brave:</strong> click the Shields icon in the address
+                bar and turn Shields OFF for this site, then refresh.
+              </li>
+              <li>
+                <strong>Ad blockers</strong> (uBlock, AdBlock, Privacy Badger):
+                disable for this site and refresh.
+              </li>
+              <li>
+                Or open the site in <strong>Chrome, Safari, or Firefox</strong>{" "}
+                without blockers.
+              </li>
+            </ul>
+          </div>
         )}
       </div>
       <button
