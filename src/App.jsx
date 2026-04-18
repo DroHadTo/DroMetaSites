@@ -279,7 +279,7 @@ function App() {
               >
                 <div className="package-topline">{item.label}</div>
                 <h3>{item.name}</h3>
-                <p className="package-price">${item.price}</p>
+                <p className="package-price">${item.price.toFixed(2)}</p>
                 <p className="package-blurb">{item.blurb}</p>
                 <div className="package-meta">Turnaround: {item.turnaround}</div>
                 <ul className="feature-list">
@@ -469,8 +469,8 @@ function App() {
                         <span>Current website</span>
                         <input
                           name="website"
-                          type="url"
-                          placeholder="https://"
+                          type="text"
+                          placeholder="https://yoursite.com"
                           value={form.website}
                           onChange={handleInputChange}
                         />
