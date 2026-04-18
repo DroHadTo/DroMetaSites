@@ -137,8 +137,8 @@ function App() {
   }
 
   const navItems = [
+    { href: "#packages", label: "Packages" },
     { href: "#services", label: "Services" },
-    { href: "#intel", label: "Intel" },
     { href: "#order", label: "Get Started" },
   ];
 
@@ -187,7 +187,7 @@ function App() {
             <SplitText
               as="h1"
               className="hero-title"
-              text="Stop Losing Clients To A Website That Looks Like Everyone Else's"
+              text="Premium Websites Built To Grow Your Business"
             />
             <p className="hero-lead">
               Your brand deserves more than a template. We design and build high-performance,
@@ -227,55 +227,6 @@ function App() {
           </div>
         </section>
 
-        <section className="section" id="services">
-          <SectionReveal className="section-heading">
-            <div className="eyebrow">What We Build</div>
-            <SplitText
-              as="h2"
-              className="section-title"
-              text="Everything Your Online Presence Needs To Compete"
-            />
-            <p>
-              From design and development to brand identity and ongoing support — we handle the full picture so you don't have to piece it together yourself.
-            </p>
-          </SectionReveal>
-
-          <div className="service-grid">
-            {services.map((service, index) => (
-              <SectionReveal className="glass-card service-card" delay={index * 0.06} key={service.title}>
-                <div className="service-index">{service.icon}</div>
-                <h3>{service.title}</h3>
-                <p>{service.text}</p>
-              </SectionReveal>
-            ))}
-          </div>
-        </section>
-
-        <section className="section" id="intel">
-          <div className="proof-layout">
-            <SectionReveal className="section-heading">
-              <div className="eyebrow">Why Clients Choose Us</div>
-              <SplitText
-                as="h2"
-                className="section-title"
-                text="We Build Sites That Work As Hard As You Do"
-              />
-              <p>
-                Positioning, speed, and conversion architecture are built into the structure from day one — not added as an afterthought.
-              </p>
-            </SectionReveal>
-
-            <div className="proof-grid">
-              {proof.map((item, index) => (
-                <SectionReveal className="glass-card proof-card" delay={index * 0.06} key={item.title}>
-                  <h3>{item.title}</h3>
-                  <p>{item.text}</p>
-                </SectionReveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
         <section className="section" id="packages">
           <SectionReveal className="section-heading">
             <div className="eyebrow">Pricing & Packages</div>
@@ -309,31 +260,8 @@ function App() {
                   type="button"
                   onClick={() => selectPackage(item.id)}
                 >
-                  Launch Project
+                  Get Started
                 </button>
-              </SectionReveal>
-            ))}
-          </div>
-        </section>
-
-        <section className="section testimonials-section">
-          <SectionReveal className="section-heading">
-            <div className="eyebrow">Client Results</div>
-            <SplitText
-              as="h2"
-              className="section-title"
-              text="Real Businesses. Real Results. Real Words."
-            />
-          </SectionReveal>
-
-          <div className="testimonial-grid">
-            {testimonials.map((item, index) => (
-              <SectionReveal className="glass-card testimonial-card" delay={index * 0.05} key={item.name}>
-                <p>"{item.quote}"</p>
-                <div className="testimonial-meta">
-                  <strong>{item.name}</strong>
-                  <span>{item.role}</span>
-                </div>
               </SectionReveal>
             ))}
           </div>
@@ -640,6 +568,79 @@ function App() {
             </SectionReveal>
           </div>
         </section>
+
+        <section className="section" id="services">
+          <SectionReveal className="section-heading">
+            <div className="eyebrow">What We Build</div>
+            <SplitText
+              as="h2"
+              className="section-title"
+              text="Everything Your Online Presence Needs To Compete"
+            />
+            <p>
+              From design and development to brand identity and ongoing support — we handle the full picture so you don't have to piece it together yourself.
+            </p>
+          </SectionReveal>
+
+          <div className="service-grid">
+            {services.map((service, index) => (
+              <SectionReveal className="glass-card service-card" delay={index * 0.06} key={service.title}>
+                <div className="service-index">{service.icon}</div>
+                <h3>{service.title}</h3>
+                <p>{service.text}</p>
+              </SectionReveal>
+            ))}
+          </div>
+        </section>
+
+        <section className="section" id="intel">
+          <div className="proof-layout">
+            <SectionReveal className="section-heading">
+              <div className="eyebrow">Why Clients Choose Us</div>
+              <SplitText
+                as="h2"
+                className="section-title"
+                text="We Build Sites That Work As Hard As You Do"
+              />
+              <p>
+                Positioning, speed, and conversion architecture are built into the structure from day one — not added as an afterthought.
+              </p>
+            </SectionReveal>
+
+            <div className="proof-grid">
+              {proof.map((item, index) => (
+                <SectionReveal className="glass-card proof-card" delay={index * 0.06} key={item.title}>
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </SectionReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="section testimonials-section">
+          <SectionReveal className="section-heading">
+            <div className="eyebrow">Client Results</div>
+            <SplitText
+              as="h2"
+              className="section-title"
+              text="Real Businesses. Real Results. Real Words."
+            />
+          </SectionReveal>
+
+          <div className="testimonial-grid">
+            {testimonials.map((item, index) => (
+              <SectionReveal className="glass-card testimonial-card" delay={index * 0.05} key={item.name}>
+                <p>"{item.quote}"</p>
+                <div className="testimonial-meta">
+                  <strong>{item.name}</strong>
+                  <span>{item.role}</span>
+                </div>
+              </SectionReveal>
+            ))}
+          </div>
+        </section>
+
       </main>
 
       <footer className="site-footer">
