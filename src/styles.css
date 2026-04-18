@@ -287,7 +287,7 @@ body::selection {
 }
 
 .hero-copy {
-  padding: clamp(2rem, 5vw, 4rem);
+  padding: clamp(1.25rem, 3vw, 2.25rem);
 }
 
 .hero-copy::before,
@@ -311,8 +311,8 @@ body::selection {
 }
 
 .hero-title {
-  max-width: 10ch;
-  font-size: clamp(3.2rem, 8vw, 6.6rem);
+  max-width: 22ch;
+  font-size: clamp(2rem, 4.5vw, 3.6rem);
 }
 
 .hero-lead,
@@ -331,8 +331,8 @@ body::selection {
 
 .hero-lead {
   max-width: 42rem;
-  margin: 1.5rem 0 0;
-  font-size: 1.08rem;
+  margin: 1rem 0 0;
+  font-size: 1rem;
 }
 
 .hero-actions,
@@ -340,14 +340,14 @@ body::selection {
   display: flex;
   flex-wrap: wrap;
   gap: 0.9rem;
-  margin-top: 2rem;
+  margin-top: 1.25rem;
 }
 
 .hero-chips {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 2rem;
+  margin-top: 1.25rem;
 }
 
 .hero-chips span {
